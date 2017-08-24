@@ -9,7 +9,7 @@ sealed trait Convert {
 
   def conversion[T](res: => T): Result[T]
 
-  def fail[T](ex: => Exception): Nothing
+  def fail(ex: => Exception): Nothing
 
   def unwrap[T](result: Result[T]): T
 
@@ -43,7 +43,7 @@ object Convert {
 
     override def conversion[T](res: => T): T = res
 
-    override def fail[T](ex: => Exception): Nothing = throw ex
+    override def fail(ex: => Exception): Nothing = throw ex
 
     override def unwrap[T](result: T): T = result
   }
@@ -59,7 +59,7 @@ object Convert {
       }
     }
 
-    override def fail[T](ex: => Exception): Nothing = throw FailControl
+    override def fail(ex: => Exception): Nothing = throw FailControl
 
     override def unwrap[T](result: Option[T]): T = result match {
       case Some(t) => t
